@@ -1,0 +1,67 @@
+#!/usr/bin/env sh
+set -eu
+
+# skip in CI
+[ -n "${CI:-}" ] && exit 0
+
+echo ""
+echo "🔍 Running pre-commit linters..."
+
+# Check if there are any staged files
+if [ -z "$(git diff --cached --name-only --diff-filter=ACM)" ]; then
+  echo "📭 No staged files. Skipping."
+  exit 0
+fi
+
+FAILED=0
+
+# --- Prettier: all files (write)
+echo "✨ Prettier (write) ..."
+if git diff --cached --name-only --diff-filter=ACM -z \
+  -- '*.js' '*.ts' '*.jsx' '*.tsx' '*.scss' '*.css' '*.md' '*.json' '*.yml' '*.yaml' '*.html' \
+  | xargs -0 -r npx --no prettier --write -- \
+  && git diff --cached --name-only --diff-filter=ACM -z \
+  -- '*.js' '*.ts' '*.jsx' '*.tsx' '*.scss' '*.css' '*.md' '*.json' '*.yml' '*.yaml' '*.html' \
+  | xargs -0 -r git add --
+then
+  echo "✅ Prettier OK"
+else
+  echo "❌ Prettier failed"
+  FAILED=1
+fi
+
+# --- Stylelint: SCSS/CSS (fix)
+echo "🎨 Stylelint (fix) ..."
+if git diff --cached --name-only --diff-filter=ACM -z -- '*.scss' '*.css' \
+  | xargs -0 -r npx --no stylelint -- --fix \
+  && git diff --cached --name-only --diff-filter=ACM -z -- '*.scss' '*.css' \
+  | xargs -0 -r git add --
+then
+  echo "✅ Stylelint OK"
+else
+  echo "❌ Stylelint failed"
+  FAILED=1
+fi
+
+# --- ESLint: JS/TS
+echo "🧠 ESLint (fix, no warnings) ..."
+if git diff --cached --name-only --diff-filter=ACM -z -- '*.js' '*.ts' '*.jsx' '*.tsx' \
+  | xargs -0 -r npx --no eslint -- --fix --max-warnings=0 \
+  && git diff --cached --name-only --diff-filter=ACM -z -- '*.js' '*.ts' '*.jsx' '*.tsx' \
+  | xargs -0 -r git add --
+then
+  echo "✅ ESLint OK"
+else
+  echo "❌ ESLint failed"
+  FAILED=1
+fi
+
+if [ "$FAILED" -ne 0 ]; then
+  echo ""
+  echo "💥 Commit aborted: fix the errors above."
+  exit 1
+fi
+
+echo ""
+echo "✅ All linters passed. Proceeding with commit."
+exit 0
