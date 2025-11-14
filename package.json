@@ -1,6 +1,7 @@
 {
   "name": "arcana",
   "version": "0.0.0",
+  "author": "Alexandr Gurin",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +11,11 @@
     "serve:ssr:arcana": "node dist/arcana/server/server.mjs",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
-    "lint": "eslint . --max-warnings=0"
+    "lint:eslint": "eslint . --max-warnings=0",
+    "stylelint": "stylelint \"src/**/*.{scss,css}\"",
+    "stylelint:fix": "stylelint \"src/**/*.{scss,css}\" --fix",
+    "lint:styles": "stylelint \"src/**/*.{scss,css}\" --max-warnings=0",
+    "lint-all": "npm run lint:eslint && npm run lint:styles"
   },
   "prettier": {
     "printWidth": 100,
@@ -55,6 +60,9 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-scss": "^6.12.1",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.46.4"
   }
