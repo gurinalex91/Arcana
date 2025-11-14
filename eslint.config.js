@@ -30,7 +30,10 @@ module.exports = [
       ...cfg.rules,
       // Practical TS rules that don't require type info
       '@typescript-eslint/consistent-type-imports': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       'no-console': 'off',
     },
   })),
@@ -40,8 +43,14 @@ module.exports = [
     files: ['**/*.ts'],
     plugins: { '@angular-eslint': angular },
     rules: {
-      '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'arc', style: 'camelCase' }],
-      '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'arc', style: 'kebab-case' }],
+      '@angular-eslint/directive-selector': [
+        'error',
+        { type: 'attribute', prefix: 'arc', style: 'camelCase' },
+      ],
+      '@angular-eslint/component-selector': [
+        'error',
+        { type: 'element', prefix: 'arc', style: 'kebab-case' },
+      ],
       '@angular-eslint/component-class-suffix': 'error',
       '@angular-eslint/contextual-decorator': 'warn',
       '@angular-eslint/prefer-on-push-component-change-detection': 'warn',
