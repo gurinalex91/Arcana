@@ -1,7 +1,7 @@
 stages: [lint, test, build, verify]
 
 variables:
-  NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
+  NPM_CONFIG_CACHE: '$CI_PROJECT_DIR/.npm'
 
 default:
   image: node:24
@@ -49,7 +49,7 @@ build:
     - npm ci
     - npm run build
   artifacts:
-    name: "dist-$CI_COMMIT_SHORT_SHA"
+    name: 'dist-$CI_COMMIT_SHORT_SHA'
     paths:
       - dist/
     expire_in: 1 week
@@ -57,7 +57,7 @@ build:
 # --- SSR SMOKE ---
 ssr_smoke:
   stage: verify
-  needs: ["build"]
+  needs: ['build']
   image: node:24
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
