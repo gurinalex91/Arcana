@@ -8,8 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:arcana": "node dist/arcana/server/server.mjs",
-    "lint": "echo 'lint skipped'; exit 0",
-    "format:check": "echo 'format check skipped'; exit 0"
+    "eslint": "eslint .",
+    "eslint:fix": "eslint . --fix",
+    "lint": "eslint . --max-warnings=0"
   },
   "prettier": {
     "printWidth": 100,
@@ -38,18 +39,23 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-eslint/eslint-plugin": "^20.6.0",
+    "@angular-eslint/eslint-plugin-template": "^20.6.0",
+    "@angular-eslint/template-parser": "^20.6.0",
     "@angular/build": "^20.3.9",
     "@angular/cli": "^20.3.9",
     "@angular/compiler-cli": "^20.3.0",
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
+    "eslint": "^9.39.1",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.46.4"
   }
 }

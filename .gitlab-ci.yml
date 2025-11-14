@@ -19,7 +19,6 @@ lint:
   script:
     - npm ci
     - npm run lint
-    - npm run format:check
 
 # --- TEST ---
 test:
@@ -27,7 +26,7 @@ test:
   image: node:24
   variables:
     CHROME_BIN: /usr/bin/chromium
-  rules:                        
+  rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == "main"
   script:
