@@ -1,4 +1,4 @@
-stages: [lint, test, build, verify]
+stages: [lint, test, build, verify, deploy]
 
 variables:
   NPM_CONFIG_CACHE: '$CI_PROJECT_DIR/.npm'
@@ -6,7 +6,9 @@ variables:
 default:
   image: node:24
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key:
+      files:
+        - package-lock.json
     paths:
       - .npm/
 
@@ -15,6 +17,7 @@ lint:
   stage: lint
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "develop"
     - if: $CI_COMMIT_BRANCH == "main"
   script:
     - npm ci
@@ -28,6 +31,7 @@ test:
     CHROME_BIN: /usr/bin/chromium
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "develop"
     - if: $CI_COMMIT_BRANCH == "main"
   script:
     - apt-get update -y >/dev/null
@@ -39,11 +43,13 @@ test:
     paths:
       - coverage/
     expire_in: 1 week
+
 # --- BUILD ---
 build:
   stage: build
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "develop"
     - if: $CI_COMMIT_BRANCH == "main"
   script:
     - npm ci
@@ -61,11 +67,35 @@ ssr_smoke:
   image: node:24
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "develop"
     - if: $CI_COMMIT_BRANCH == "main"
   script:
-    - npm ci
-    - apt-get update >/dev/null && apt-get install -y curl >/dev/null
+    - apt-get update -y >/dev/null && apt-get install -y curl >/dev/null
     - node dist/arcana/server/server.mjs & SERVER_PID=$!
     - timeout 20 bash -c 'until curl -sf http://127.0.0.1:4000 >/dev/null; do sleep 1; done'
     - curl -sf http://127.0.0.1:4000 | head -n 20
     - kill $SERVER_PID
+
+# --- DEPLOY: DEV ---
+deploy:dev:
+  stage: deploy
+  needs: ['build']
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+  environment:
+    name: dev
+  script:
+    - echo "Deploy to DEV (stub)"
+
+# --- DEPLOY: PROD ---
+deploy:prod:
+  stage: deploy
+  needs: ['build']
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  when: manual
+  allow_failure: false
+  environment:
+    name: production
+  script:
+    - echo "Deploy to PROD (manual, protected)"
