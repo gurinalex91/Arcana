@@ -1,0 +1,25 @@
+# Normalize line endings to LF everywhere
+* text=auto eol=lf
+
+# Scripts should always be LF
+*.sh text eol=lf
+
+# Common text assets
+*.svg text eol=lf
+
+# Treat these as binary (no line-ending conversions / diffs)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.mp4 binary
+*.mp3 binary
+*.mov binary
