@@ -1,4 +1,4 @@
-// Flat config for ESLint v9 with Angular 20 (no type-aware yet).
+// Flat config for ESLint v9 with Angular 21 (no type-aware yet).
 // Safe starter: runs on TS + templates, avoids project-based parser errors.
 
 const tseslint = require('typescript-eslint');
