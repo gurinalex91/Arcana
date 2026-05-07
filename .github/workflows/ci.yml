@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint-all
+
+      - name: Test
+        run: npm run test:ci
+
+      - name: Build
+        run: npm run build
+
+      - name: SSR smoke test
+        run: |
+          HOST=127.0.0.1 npm run serve:ssr &
+          SERVER_PID=$!
+          timeout 20 bash -c 'until curl -sf http://127.0.0.1:4000 >/dev/null; do sleep 1; done'
+          curl -sf http://127.0.0.1:4000 | head -n 20
+          kill $SERVER_PID

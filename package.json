@@ -1,7 +1,9 @@
 {
   "name": "arcana",
   "version": "0.0.0",
+  "description": "Interactive tarot-style mini-app built with Angular, SSR, and SCSS.",
   "author": "Alexandr Gurin",
+  "license": "MIT",
   "packageManager": "npm@11.11.0",
   "engines": {
     "node": ">=24.11.0 <25",
