@@ -11,6 +11,22 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+const DEFAULT_PORT = 4000;
+const DEFAULT_HOST = '0.0.0.0';
+
+function getPort(value: string | undefined): number {
+  if (value === undefined || value === '') {
+    return DEFAULT_PORT;
+  }
+
+  const port = Number(value);
+
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error(`Invalid PORT value "${value}". Expected an integer between 1 and 65535.`);
+  }
+
+  return port;
+}
 
 /**
  * Example Express Rest API endpoints can be defined here.
@@ -48,15 +64,18 @@ app.use((req, res, next) => {
 /**
  * Start the server if this module is the main entry point, or it is ran via PM2.
  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
+ * Set `HOST` to override the default bind address.
  */
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
-  const port = process.env['PORT'] || 4000;
-  app.listen(port, (error) => {
+  const port = getPort(process.env['PORT']);
+  const host = process.env['HOST'] || DEFAULT_HOST;
+
+  app.listen(port, host, (error) => {
     if (error) {
       throw error;
     }
 
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Node Express server listening on http://${host}:${port}`);
   });
 }
 
