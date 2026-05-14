@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
 
 jobs:
@@ -18,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
@@ -37,6 +36,5 @@ jobs:
         run: |
           HOST=127.0.0.1 npm run serve:ssr &
           SERVER_PID=$!
-          timeout 20 bash -c 'until curl -sf http://127.0.0.1:4000 >/dev/null; do sleep 1; done'
-          curl -sf http://127.0.0.1:4000 | head -n 20
-          kill $SERVER_PID
+          trap 'kill $SERVER_PID || true' EXIT
+          timeout 20 bash -c 'until curl -fsS http://127.0.0.1:4000/ >/dev/null; do sleep 1; done'
