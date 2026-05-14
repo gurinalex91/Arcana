@@ -62,6 +62,12 @@
 - Avoid speculative architecture
 - Keep components focused and predictable
 - Prefer readability over cleverness
+- Split UI into small focused Angular components when it improves readability
+- Prefer simple presentational components for stable UI parts
+- Avoid keeping the entire MVP flow inside one large root component once the UI grows
+- Do not over-split too early
+- Do not introduce feature modules, services, stores, or deep folder architecture without clear need
+- Component extraction should be incremental and tied to actual UI boundaries
 
 ---
 
@@ -83,6 +89,12 @@
 - Avoid inline styles
 - Avoid utility-framework patterns unless explicitly approved
 - Avoid introducing CSS frameworks without approval
+- Use BEM-style class naming for component SCSS
+- Prefer block__element--modifier naming
+- Keep BEM blocks scoped to the component or meaningful UI section
+- Avoid random utility-style class names
+- Avoid deeply nested SCSS selectors
+- Avoid styling by tag selectors when a BEM class is more explicit
 
 ---
 
