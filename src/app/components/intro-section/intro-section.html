@@ -1,0 +1,14 @@
+<div class="intro-section">
+  <p class="intro-section__eyebrow">Arcana</p>
+  <h1 class="intro-section__title" id="arcana-title">Draw a card. Reflect for a moment.</h1>
+  <p class="intro-section__copy">
+    Arcana is an entertainment-only tarot-style card experience for reflection, creativity, and a
+    different angle on your day.
+  </p>
+
+  @if (showAction()) {
+    <button class="intro-section__action" type="button" (click)="drawStarted.emit()">
+      Start card draw
+    </button>
+  }
+</div>

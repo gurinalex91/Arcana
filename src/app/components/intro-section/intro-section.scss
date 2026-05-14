@@ -1,0 +1,60 @@
+:host {
+  display: block;
+}
+
+.intro-section {
+  &__eyebrow,
+  &__title,
+  &__copy {
+    margin: 0;
+  }
+
+  &__eyebrow {
+    color: #735438;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    max-width: 11ch;
+    margin-top: 16px;
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 0.95;
+
+    @media (width <= 520px) {
+      font-size: 2.75rem;
+    }
+  }
+
+  &__copy {
+    max-width: 560px;
+    margin-top: 24px;
+    font-size: 1.08rem;
+    line-height: 1.7;
+  }
+
+  &__action {
+    min-height: 48px;
+    margin-top: 28px;
+    padding: 0 22px;
+    border: 1px solid #241f2f;
+    border-radius: 999px;
+    color: #f8f5ef;
+    background: #241f2f;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+
+    &:focus-visible {
+      outline: 3px solid #b38b59;
+      outline-offset: 3px;
+    }
+
+    @media (width <= 520px) {
+      width: 100%;
+    }
+  }
+}
