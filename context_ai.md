@@ -89,12 +89,32 @@
 - Avoid inline styles
 - Avoid utility-framework patterns unless explicitly approved
 - Avoid introducing CSS frameworks without approval
+
+### BEM
+
 - Use BEM-style class naming for component SCSS
-- Prefer block__element--modifier naming
+- Prefer `block__element--modifier` naming
 - Keep BEM blocks scoped to the component or meaningful UI section
+- Use the component/root block as the main SCSS selector
 - Avoid random utility-style class names
-- Avoid deeply nested SCSS selectors
 - Avoid styling by tag selectors when a BEM class is more explicit
+
+### SCSS Nesting
+
+- Use SCSS nesting with BEM-style selectors where it improves readability
+- Prefer nesting BEM elements and modifiers with `&__element` and `&--modifier`
+- Keep SCSS nesting shallow and readable
+- Avoid deeply nested selectors beyond 2 levels unless there is a clear reason
+- Avoid nesting that makes the final compiled selector hard to understand
+
+### Sass Helpers
+
+- Use Sass mixins/functions only when they reduce real duplication or clarify repeated patterns
+- Do not create mixins for one-off styles
+- Do not introduce a large global SCSS architecture without approval
+- Prefer `@use` over deprecated `@import`
+- If shared Sass helpers are needed, keep them small, explicit, and boring
+- Reuse existing SCSS variables, mixins, and patterns before adding new ones
 
 ---
 
