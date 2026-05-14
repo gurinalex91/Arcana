@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.card-draw {
+  max-width: 560px;
+  margin-top: 24px;
+  font-size: 1.08rem;
+  line-height: 1.7;
+
+  &__copy {
+    margin: 0;
+  }
+
+  &__action {
+    min-height: 48px;
+    margin-top: 28px;
+    padding: 0 22px;
+    border: 1px solid #241f2f;
+    border-radius: 999px;
+    color: #f8f5ef;
+    background: #241f2f;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+
+    &:focus-visible {
+      outline: 3px solid #b38b59;
+      outline-offset: 3px;
+    }
+
+    @media (width <= 520px) {
+      width: 100%;
+    }
+  }
+}
